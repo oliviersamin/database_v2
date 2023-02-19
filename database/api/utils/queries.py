@@ -5,7 +5,11 @@ from django.db.models import Q
 def get_and_filtered_results(params, query):
     result = set()
     for key, value in params.items():
-        temp = set([item.pk for item in query if getattr(item, key) == int(value)])
+        try:
+            value = int(value)
+        except ValueError:
+            pass
+        temp = set([item.pk for item in query if getattr(item, key) == value])
         if result:
             result = result.intersection(temp)
         else:

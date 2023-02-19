@@ -1,6 +1,5 @@
-from .user import UserSerializer, UserDetailSerializer
+from .admin_document import AdminDocumentSerializer
 
 __all__ = [
-    UserDetailSerializer,
-    UserSerializer,
+    AdminDocumentSerializer,
 ]

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'real_estate',
     'tax',
     'transportation',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

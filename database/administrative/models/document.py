@@ -26,3 +26,6 @@ class Document(models.Model):
 
     def __str__(self):
         return self.name + ' - ' + self.type if self.name else self.type
+
+    def get_user_name(self):
+        return self.user.get_full_name()

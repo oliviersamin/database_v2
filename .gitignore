@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/database/.env.api
+/telegram_app/.env.telegram
+
+# database personal files
+files/
+
+#migration files
+migrations/
