@@ -11,7 +11,7 @@ def get_types():
 
 class Document(models.Model):
     """
-    to get instances of ID card, passport, driving licence, a ticket ...
+    'Document'
     """
     UPLOADED_FILE_PATH = os.environ.get('UPLOADING_FILES_FOLDER_PATH')
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=True)

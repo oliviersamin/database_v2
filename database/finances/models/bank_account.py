@@ -2,6 +2,9 @@ from django.db import models
 
 
 class BankAccount(models.Model):
+    """
+    'Bank Account'
+    """
     bank = models.ForeignKey('finances.Bank', related_name='account', blank=False, null=True, on_delete=models.CASCADE)
     IBAN = models.CharField(max_length=40, blank=False, null=True)
     BIC = models.CharField(max_length=20, blank=True, null=True)

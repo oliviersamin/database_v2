@@ -1,5 +1,5 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from api.utils import get_query_related_to_telegram_choice
+# from database.api.utils import get_query_related_to_telegram_choice
 
 ############################ MENUS #########################################
 

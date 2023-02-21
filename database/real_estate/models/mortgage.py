@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Mortgage(models.Model):
     """
-    Mortgage model
+    'Mortgage'
     """
     asset = models.OneToOneField('real_estate.Asset', related_name='mortgage', blank=False, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, blank=True, null=True)

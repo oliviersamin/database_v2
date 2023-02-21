@@ -9,8 +9,9 @@ from telegram.ext import Application, ContextTypes, MessageHandler, filters
 class Communication:
     def __init__(self):
         load_dotenv()
+        self.file_path = os.environ.get('ATTRIBUTES_FILE_PATH')
         self.cles = {
-            '?': [self.aide, 'displqy commands that are available'],
+            '?': [self.aide, 'display commands that are available'],
             '/start': [menus.start, 'select the data you need from the database'],
         }
         self.token = os.environ.get('TOKEN')
@@ -20,7 +21,18 @@ class Communication:
         for k, v in zip(self.cles.keys(),self.cles.values()):
             self.texteAide += k + ' : ' + v[1] + '\n'
         return self.texteAide
-        # self.chat.envoi_message(self.texteAide)
+
+    def get_model_details(self):
+        with open(self.file_path, 'r') as file:
+            data = file.readline()
+        data = data.split('|')
+        print('data = ', data)
+        results = [item.split(',') for item in data]
+        print(results)
+        final = []
+        for item in results:
+            final.append({'module': item[0][item[0].find(':')+ 2:], 'model': item[1][item[1].find(':')+ 2:], 'attributes': item[2][item[2].find(':')+ 2:]})
+        return final
 
     async def action_for_text_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Send a message when the command /help is issued."""
@@ -31,6 +43,7 @@ class Communication:
                 await update.message.reply_text(message)
 
     def lancer(self):
+        data = self.get_model_details()
         application = Application.builder().token(self.token).build()
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.action_for_text_message))
         ####### Menus for API ############

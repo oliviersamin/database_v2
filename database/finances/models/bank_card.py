@@ -2,6 +2,9 @@ from django.db import models
 
 
 class BankCard(models.Model):
+    """
+    'Bank Card'
+    """
     bank_account = models.ForeignKey('finances.BankAccount', related_name='card', blank=False, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=False, default=True)

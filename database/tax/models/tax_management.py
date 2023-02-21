@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class TaxManagementCompany(models.Model):
     """
-    Tax management company model
+    'Tax management company'
     """
     name = models.CharField(max_length=50, blank=True, null=True)
     personal_email_used = models.EmailField(null=True, blank=True)
@@ -20,7 +20,7 @@ class TaxManagementCompany(models.Model):
 
 class TaxManagementContract(models.Model):
     """
-    Tax management contract model
+    'Tax management contract'
     """
     company = models.ForeignKey('tax.TaxManagementCompany', related_name='company', on_delete=models.CASCADE, blank=True, null=True)
     contract_number = models.CharField(max_length=50, blank=True, null=True)

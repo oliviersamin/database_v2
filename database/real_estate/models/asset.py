@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Asset(models.Model):
+    """
+    'Asset'
+    """
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='real_estate_asset', blank=True, null=True)
     nickname = models.CharField(max_length=50, blank=False, null=True, help_text="nickname you want to give to this asset")

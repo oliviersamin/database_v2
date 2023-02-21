@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Tenant(models.Model):
+    """
+    'Tenant'
+    """
     asset = models.OneToOneField('real_estate.Asset', related_name='tenant', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=False, null=True)
     last_name = models.CharField(max_length=50, blank=False, null=True)

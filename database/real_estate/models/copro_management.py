@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class CoproManagementCompany(models.Model):
     """
-    Copro management company model
+    'Copro management company'
     """
     name = models.CharField(max_length=50, blank=True, null=True)
     personal_email_used = models.EmailField(null=True, blank=True)
@@ -20,7 +20,7 @@ class CoproManagementCompany(models.Model):
 
 class CoproManagementContract(models.Model):
     """
-    Copro management contract model
+    'Copro management contract'
     """
     company = models.OneToOneField('real_estate.CoproManagementCompany', related_name='copro_contract', blank=False, null=True, on_delete=models.CASCADE)
     contract_number = models.CharField(max_length=50, blank=True, null=True)

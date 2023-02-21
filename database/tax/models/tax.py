@@ -8,7 +8,7 @@ def get_tax_choices():
 
 class Tax(models.Model):
     """
-    Tax model to get instances of habitation tax ...
+    'Tax'
     """
     name = models.CharField(max_length=100, blank=True, null=True)
     tax_type = models.CharField(max_length=50, null=True, blank=True, choices=get_tax_choices())

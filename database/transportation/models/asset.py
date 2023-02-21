@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 
 
 class Asset(models.Model):
+    """
+    'Asset'
+    """
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='transportation_asset', blank=True, null=True)
     type = models.CharField(max_length=30, blank=False, null=True, help_text='ex: Car, bike, moto...')

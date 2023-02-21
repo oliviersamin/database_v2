@@ -7,6 +7,9 @@ def get_types():
 
 
 class InsuranceContract(models.Model):
+    """
+    'Insurance Contract'
+    """
     company = models.ForeignKey('administrative.InsuranceCompany', related_name='contract', blank=False, null=True, on_delete=models.CASCADE)
     type = models.CharField(max_length=50, null=True, blank=True, choices=get_types())
     real_estate_asset = models.ForeignKey('real_estate.Asset', blank=True, null=True, related_name='insurance_contract', on_delete=models.CASCADE, help_text="Fill only if type = Real Estate insurance")
