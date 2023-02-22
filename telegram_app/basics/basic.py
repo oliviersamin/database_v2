@@ -26,9 +26,7 @@ class Communication:
         with open(self.file_path, 'r') as file:
             data = file.readline()
         data = data.split('|')
-        print('data = ', data)
         results = [item.split(',') for item in data]
-        print(results)
         final = []
         for item in results:
             final.append({'module': item[0][item[0].find(':')+ 2:], 'model': item[1][item[1].find(':')+ 2:], 'attributes': item[2][item[2].find(':')+ 2:]})

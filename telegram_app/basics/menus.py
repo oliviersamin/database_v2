@@ -1,6 +1,33 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-# from database.api.utils import get_query_related_to_telegram_choice
+import os
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from dotenv import load_dotenv
+load_dotenv()
+FILE_PATH = os.environ.get('ATTRIBUTES_FILE_PATH')
+
+def get_model_details() -> list:
+    """
+    get models and attributes of all api modules
+    :param self:
+    :return:
+    """
+    with open(FILE_PATH, 'r') as file:
+        data = file.readline()
+    data = data.split('|')
+    results = [item.split(',') for item in data]
+    final = []
+    for item in results:
+        final.append({'module': item[0][item[0].find(':') + 2:], 'model': item[1][item[1].find(':') + 2:],
+                      'attributes': item[2][item[2].find(':') + 2:]})
+    return final
+
+def set_data_for_menus():
+    data = get_model_details()
+    modules = set([item.get('module') for item in data])
+    return sorted(modules)
+
+DATA = get_model_details()
+MODULES = set_data_for_menus()
 ############################ MENUS #########################################
 
 ########### Starting menu ###########
@@ -45,12 +72,10 @@ async def os_id_card(bot, update):
 
 ############################ Keyboards #########################################
 
-
 def main_menu_keyboard():
-    keyboard = [[InlineKeyboardButton('Administative > document / insurances', callback_data='administrative')],
-                [InlineKeyboardButton('Finance > Bank accounts', callback_data='finance')],
-                [InlineKeyboardButton('Assets > Mortgage / Tenants / insurances / Copro...', callback_data='assets')],
-                [InlineKeyboardButton('Taxes', callback_data='taxes')]]
+    keyboard = []
+    for module in MODULES:
+        keyboard.append([InlineKeyboardButton(module, callback_data=module)])
     return InlineKeyboardMarkup(keyboard)
 
 
