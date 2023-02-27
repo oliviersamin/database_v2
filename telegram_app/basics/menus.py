@@ -1,9 +1,10 @@
 import os
-
+from set_menus import set_menus
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from dotenv import load_dotenv
 load_dotenv()
 FILE_PATH = os.environ.get('ATTRIBUTES_FILE_PATH')
+
 
 def get_model_details() -> list:
     """
@@ -21,13 +22,27 @@ def get_model_details() -> list:
                       'attributes': item[2][item[2].find(':') + 2:]})
     return final
 
+
 def set_data_for_menus():
     data = get_model_details()
     modules = set([item.get('module') for item in data])
     return sorted(modules)
 
+
 DATA = get_model_details()
+ITEMS = set_menus()
+print('DATA = ', DATA)
+print('ITEMS = ', ITEMS)
+for item in ITEMS:
+    print(item.name, item.parent, item.type)
+functions = []
+# for item in ITEMS:
+#     print(item)
+#     print('item.__dict__ = ', item.__dict__)
+#     if item.parent != '':
+#         functions.append(item)
 MODULES = set_data_for_menus()
+print('MODULES = ', MODULES)
 ############################ MENUS #########################################
 
 ########### Starting menu ###########
@@ -35,35 +50,42 @@ MODULES = set_data_for_menus()
 
 async def start(bot, update):
     await bot.message.reply_text(generic_message('main'),
-                                 reply_markup=main_menu_keyboard())
+                                 reply_markup=modules_keyboard())
 
 
-async def main_menu(bot, update):
+async def modules(bot, update):
     await bot.callback_query.message.edit_text(generic_message('main'),
-                                               reply_markup=main_menu_keyboard())
+                                               reply_markup=modules_keyboard())
 
+# async def main_menu(bot, update):
+#     await bot.callback_query.message.edit_text(generic_message('main'),
+#                                                reply_markup=main_menu_keyboard())
 
 ########### Administrative menus ###########
+
+TEST_FUNC = ['administrative', 'document', 'id_card', 'os_id_card']
+TEST_KEYBOARD = [item + '_keyboard()' for item in TEST_FUNC]
+print(TEST_KEYBOARD)
 
 
 async def administrative(bot, update):
     path = 'main > administrative'
     await bot.callback_query.message.edit_text(generic_message(path),
                                                reply_markup=administrative_keyboard())
-
-
+#
+#
 async def document(bot, update):
     path = 'main > administrative > document'
     await bot.callback_query.message.edit_text(generic_message(path),
                                                reply_markup=document_keyboard())
-
-
+#
+#
 async def id_card(bot, update):
     path = 'main > administrative > document > ID card'
     await bot.callback_query.message.edit_text(generic_message(path),
                                                reply_markup=id_card_keyboard())
 
-
+#
 async def os_id_card(bot, update):
     get_query_related_to_telegram_choice(
         bot['callback_query']['message']['reply_markup']['inline_keyboard'][0][0]['callback_data']
@@ -72,10 +94,17 @@ async def os_id_card(bot, update):
 
 ############################ Keyboards #########################################
 
-def main_menu_keyboard():
+# def main_menu_keyboard():
+#     keyboard = []
+#     for module in MODULES:
+#         keyboard.append([InlineKeyboardButton(module, callback_data=module)])
+#     return InlineKeyboardMarkup(keyboard)
+
+def modules_keyboard():
     keyboard = []
     for module in MODULES:
         keyboard.append([InlineKeyboardButton(module, callback_data=module)])
+        # keyboard.append([InlineKeyboardButton(module, callback_data=module)])
     return InlineKeyboardMarkup(keyboard)
 
 

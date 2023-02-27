@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import os
 import menus
+from menus import administrative, document, id_card, os_id_card
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram import Update
 from telegram.ext import Application, ContextTypes, MessageHandler, filters
@@ -46,11 +47,18 @@ class Communication:
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.action_for_text_message))
         ####### Menus for API ############
         application.add_handler(CommandHandler('start', menus.start))
-        application.add_handler(CallbackQueryHandler(menus.main_menu, pattern='main'))
-        application.add_handler(CallbackQueryHandler(menus.administrative, pattern='administrative'))
-        application.add_handler(CallbackQueryHandler(menus.document, pattern='document'))
-        application.add_handler(CallbackQueryHandler(menus.id_card, pattern='id_card'))
-        application.add_handler(CallbackQueryHandler(menus.os_id_card, pattern='os_id_card'))
+        application.add_handler(CallbackQueryHandler(menus.modules, pattern='modules'))
+        for item in menus.ITEMS:
+            if item.type == 'module' or item.type == 'model':
+                application.add_handler(CallbackQueryHandler(eval('menus.{}'.format(item.name)), pattern=item.name))
+
+        # application.add_handler(CallbackQueryHandler(menus.main_menu, pattern='main'))
+        # application.add_handler(CallbackQueryHandler(menus.administrative, pattern='administrative'))
+        # application.add_handler(CallbackQueryHandler(menus.document, pattern='document'))
+        # application.add_handler(CallbackQueryHandler(menus.id_card, pattern='id_card'))
+        # application.add_handler(CallbackQueryHandler(menus.os_id_card, pattern='os_id_card'))
+        # [application.add_handler(CallbackQueryHandler(eval(name), pattern=name)) for name in menus.TEST_FUNC]
+
         ##################################
         application.run_polling()
 
